@@ -31,6 +31,8 @@ test('🧪 run() should retrieve the output variable from Terraform Cloud and ma
   t.plan(1);
   t.teardown(() => sandbox.restore());
 
+  // TODO: remove this once the CI-only test issues are figured out.
+  console.log('::debug::$GITHUB_OUTPUT', process.env['GITHUB_OUTPUT'])
   const input = {
     apiToken: 'xxx',
     workspaceId: 'ws-123',
