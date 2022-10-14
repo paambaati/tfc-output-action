@@ -1,0 +1,22 @@
+name: 'Terraform Cloud Remote Action'
+description: 'Fetch output variable values from Terraform Cloud'
+author: 'GP <me@httgp.com>'
+branding:
+  icon: 'code'
+  color: 'gray-dark'
+inputs:
+  apiToken:
+    required: true
+    description: 'API token from Terraform Cloud'
+  workspaceId:
+    required: true
+    description: 'Terraform Cloud workspace ID'
+  variableName:
+    required: true
+    description: 'Name of the Terraform Cloud output variable to retrieve'
+outputs:
+  value:
+    description: 'Value of the Terraform Cloud output variable'
+runs:
+  using: 'node16'
+  main: 'lib/main.js'

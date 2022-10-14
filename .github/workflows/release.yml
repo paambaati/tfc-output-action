@@ -1,0 +1,21 @@
+name: "Release & publish"
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '!*'
+
+jobs:
+  release:
+    name: Cut a release on GitHub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cut a release on GitHub
+        run: npm_config_yes=true npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: 'GP'
+          GIT_COMMITTER_NAME: 'GP'
+          GIT_AUTHOR_EMAIL: 'me@httgp.com'
+          GIT_COMMITTER_EMAIL: 'me@httgp.com'

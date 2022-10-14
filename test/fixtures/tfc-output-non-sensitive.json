@@ -1,0 +1,91 @@
+{
+    "data": {
+        "id": "sv-USnpCrd2tvBgCzys",
+        "type": "state-versions",
+        "attributes": {
+            "created-at": "2022-09-22T12:14:15.232Z",
+            "size": 8322,
+            "hosted-state-download-url": "https://archivist.terraform.io/v1/object/dmF1bHQ6djI6OS9SZDNhcWRJVHFMxXVHMi9ISmJRQXM3bXFDY1BYSnhxNmZVekF5QVo0ajFNWjNaZWZhbnJtSzhXVTRLRjhuclBHa2RvUURlYVUzV254Z1ZQNzd5b3BOVEdUNGsxSnN2MWJUV1JuY1NLNlBSdkF1VVEwSUhCS2xwdDBzRnNIZHVWSVY4MHFYWjF3REZjN1dNQ0JxZ29NOHBsWnczYktsYnpHcHlyUWlWOXRjUHY2cytxUDhJNlJaZ0RRbjJ2c01Uc0JWWFhLb1JQYkdVVVI1SFRGbGpqTk9aS3QwdGxqbis5YW00Y3ZSSW44aVIrZi9kUllwVzNGZ3pQZmRtBmpzZXJiemJ6TkJqcHRXS3QvQmovY09sMVBubjVCeUhErm1idnJXbkVFWWZNek9zUXlHZmRka3Zlc203YytTVDdYN1pLTU9IVXpMK3I0Qk8rQnRZNnZxT3RUZ2VXS25kT3RsdncrbHkvY0k1UFBGNlNYRTdqVElRR1J1RUtHMFY1NVBNMjYxYlp3aXpDSjFSMkhDZG12c2o0VGp3UFRBdTxuUT0",
+            "hosted-json-state-download-url": null,
+            "modules": {
+                "root": {
+                    "aws_iam_policy_document": 1
+                }
+            },
+            "providers": {
+                "provider[\"registry.terraform.io/hashicorp/aws\"]": {
+                    "aws_iam_policy_document": 1
+                }
+            },
+            "resources": [
+                {
+                    "name": "some-policy-document",
+                    "type": "data.aws_iam_policy_document",
+                    "count": 1,
+                    "module": "root",
+                    "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]"
+                }
+            ],
+            "resources-processed": true,
+            "serial": 13,
+            "state-version": 4,
+            "terraform-version": "1.2.9",
+            "vcs-commit-url": null,
+            "vcs-commit-sha": null
+        },
+        "relationships": {
+            "run": {
+                "data": {
+                    "id": "run-XpcC8qk5sBCLbFRX",
+                    "type": "runs"
+                }
+            },
+            "created-by": {
+                "data": {
+                    "id": "user-PH2nrvWvew12NhLZ",
+                    "type": "users"
+                },
+                "links": {
+                    "self": "/api/v2/users/user-PH2nrvWvew12NhLZ",
+                    "related": "/api/v2/runs/run-PH2nrvWvew12NhLZ/created-by"
+                }
+            },
+            "workspace": {
+                "data": {
+                    "id": "ws-123",
+                    "type": "workspaces"
+                }
+            },
+            "outputs": {
+                "data": [
+                    {
+                        "id": "wsout-CTtfeY7d2whtCt1t",
+                        "type": "state-version-outputs"
+                    }
+                ],
+                "links": {
+                    "related": "/api/v2/state-versions/sv-USnpDrd2tvWgCzyq/outputs"
+                }
+            }
+        },
+        "links": {
+            "self": "/api/v2/state-versions/sv-USnpDrd2tvWgCzyq"
+        }
+    },
+    "included": [
+        {
+            "id": "wsout-CTtfeY7d2whtCt1t",
+            "type": "state-version-outputs",
+            "attributes": {
+                "name": "abc",
+                "sensitive": false,
+                "type": "string",
+                "value": "xyz-non-sensitive",
+                "detailed-type": "string"
+            },
+            "links": {
+                "self": "/api/v2/state-version-outputs/wsout-CTtfeY7d2whtCt1t"
+            }
+        }
+    ]
+}
