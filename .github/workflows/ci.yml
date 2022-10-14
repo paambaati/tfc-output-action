@@ -3,6 +3,7 @@ on: [pull_request, push]
 
 jobs:
   check_pr:
+    name: "PR checks"
     runs-on: ubuntu-latest
     steps:
     - name: checkout code
