@@ -27,9 +27,9 @@ interface TerraformCloudAPIStateVersionResponse {
 
 /**
  * Fetches a given output variable's value from the latest remote state file from Terraform Cloud.
- * 
- * @param apiToken Terraform API token. 
- * @param workspaceId ID of Terraform Cloud workspace (starts with `ws-`). 
+ *
+ * @param apiToken Terraform API token.
+ * @param workspaceId ID of Terraform Cloud workspace (starts with `ws-`).
  * @param variableName Output variable name.
  */
 export async function getTFCOutput(
