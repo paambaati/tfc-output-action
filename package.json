@@ -28,7 +28,9 @@
     "license": "MIT",
     "dependencies": {
         "@actions/core": "1.10.0",
+        "@types/is-uuid": "1.0.0",
         "hook-std": "2.0.0",
+        "is-uuid": "1.0.2",
         "node-fetch": "2.6.7",
         "nyc": "15.1.0"
     },
