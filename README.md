@@ -17,7 +17,7 @@ With this workflow, you do not need to hardcode values from Terraform ever.
 
 ## Usage
 
-This action requires that you have a Terraform Cloud account and an API token. Read how to get one in the official documentation – https://www.terraform.io/cloud-docs/users-teams-organizations/api-tokens
+This action requires that you have a Terraform Cloud account and an API token. Learn how to get one in the official documentation – https://www.terraform.io/cloud-docs/users-teams-organizations/api-tokens
 
 ### Inputs
 
@@ -29,7 +29,7 @@ This action requires that you have a Terraform Cloud account and an API token. R
 
 #### Example
 
-Assuming you have a [Terraform Output](https://www.terraform.io/language/values/outputs) called `iam-user-name`, here's how you'd access it in a workflow.
+Assuming you have a [Terraform Output](https://www.terraform.io/language/values/outputs) variable called `iam-user-name`, here's how you'd access it in a workflow.
 
 ```yaml
 steps:
@@ -46,4 +46,4 @@ steps:
 ``` 
 ## Sensitive Output
 
-If your Terraform Output is marked as sensitive, the output value from this action is also masked, and so it is not exposed in workflow logs.
+If your Terraform Output is marked as [`sensitive`](https://www.terraform.io/language/values/outputs#sensitive-suppressing-values-in-cli-output), the output value from this action is also masked, and so it is not exposed in workflow logs.

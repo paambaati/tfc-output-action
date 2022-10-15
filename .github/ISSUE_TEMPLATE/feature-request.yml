@@ -1,0 +1,34 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "[Request]: "
+labels: ["enhancement"]
+assignees:
+  - paambaati
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: description
+    attributes:
+      label: Detailed description of the feature request
+      description: Detailed description of the feature request
+      placeholder: A clear and concise description of what you want to happen
+    validations:
+      required: true
+  - type: input
+    id: relevant-issue
+    attributes:
+      label: Related issue
+      description: If applicable, include link(s) to related issues or PRs
+      placeholder: (Optional)
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Detailed description of any alternative solutions or features you've considered 
+    validations:
+      required: true
