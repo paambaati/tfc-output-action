@@ -38,19 +38,26 @@ const createTempFile = (fileName: string): string => {
 
 const mockGithubOutputEnvironment = (): void => {
   const tempFilePath = createTempFile('MOCK_GITHUB_OUTPUT');
+  console.log('>> TEMP FILE PATH = ', tempFilePath)
   process.env.GITHUB_OUTPUT = tempFilePath;
+  console.log('>> GITHUB_OUTPUT = ', process.env.GITHUB_OUTPUT)
 };
 
 const unmockGithubOutputEnvironment = (): void => {
-  const tempFilePath = process.env.GITHUB_OUTPUT as string;
+    const tempFilePath = process.env.GITHUB_OUTPUT as string;
+    console.log('>> TEMP FILE PATH (UNMOCK) = ', tempFilePath)
   unlinkSync(tempFilePath);
   process.env.GITHUB_OUTPUT = '';
 };
 
 const getGithubOutputEnvironmentValues = (): Record<string, string> => {
   const outputFilePath = process.env.GITHUB_OUTPUT as string;
+  console.log('>> TEMP FILE PATH = ', outputFilePath)
   const fileContents = readFileSync(outputFilePath).toString();
-  return Object.fromEntries(fileContents.split(EOL).map((_) => _.split('=')));
+  console.log('>> TEMP FILE CONTENTS = ', fileContents);
+  const outputRecords = Object.fromEntries(fileContents.split(EOL).map((_) => _.split('=')));
+  console.log('>> OUTPUT RECORDS = ', outputRecords);
+  return outputRecords;
 };
 
 const isRunningInGithubActions = (): boolean =>
