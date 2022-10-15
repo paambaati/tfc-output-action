@@ -39,14 +39,11 @@ const createTempFile = (fileName: string): string => {
 
 const mockGithubOutputEnvironment = (): void => {
   const tempFilePath = createTempFile('MOCK_GITHUB_OUTPUT');
-  console.log('>> TEMP FILE PATH = ', tempFilePath);
   process.env.GITHUB_OUTPUT = tempFilePath;
-  console.log('>> GITHUB_OUTPUT = ', process.env.GITHUB_OUTPUT);
 };
 
 const unmockGithubOutputEnvironment = (): void => {
   const tempFilePath = process.env.GITHUB_OUTPUT as string;
-  console.log('>> TEMP FILE PATH (UNMOCK) = ', tempFilePath);
   unlinkSync(tempFilePath);
   process.env.GITHUB_OUTPUT = '';
 };
@@ -60,8 +57,11 @@ const getGithubOutputEnvironmentValues = (): Record<string, string> => {
   // dynamically generated delimiters (which happens to be a UUID). So we remove the delimiters and then
   // get to the keys & values alone.
   const cleanedUpContent = fileContents
-    .split(/<<ghadelimiter_(.*)\n/)
-    .map((_) => _.replace(/\nghadelimiter_(.*)(\n?)(\n?)/, ''))
+    // REFER: UUID v4 regex from https://stackoverflow.com/a/38191104
+    .split(
+      /ghadelimiter_([0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})/i
+    )
+    .map((_) => _.replace(/<</g, '').replace(/\n/g, ''))
     .flatMap((_) => (anyNonNilUUID(_) || _ === '\n' ? [] : _));
   console.log('>> CLEANED UP CONTENT = ', cleanedUpContent);
   const entries = Array.from({ length: cleanedUpContent.length / 2 }, () =>
@@ -140,7 +140,7 @@ test('🧪 run() should retrieve the output variable from Terraform Cloud and ma
       'output value should be correctly set'
     );
   } else {
-    t.pass();
+    t.pass('skipping github-actions specific assertion');
   }
 
   nock.cleanAll();
@@ -206,7 +206,7 @@ test('🧪 run() should retrieve the output variable from Terraform Cloud and ma
       'output value should be correctly set'
     );
   } else {
-    t.pass();
+    t.pass('skipping github-actions specific assertion');
   }
 
   nock.cleanAll();
