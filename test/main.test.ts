@@ -50,9 +50,7 @@ const unmockGithubOutputEnvironment = (): void => {
 
 const getGithubOutputEnvironmentValues = (): Record<string, string> => {
   const outputFilePath = process.env.GITHUB_OUTPUT as string;
-  console.log('>> TEMP FILE PATH = ', outputFilePath);
   const fileContents = readFileSync(outputFilePath).toString();
-  console.log('>> TEMP FILE CONTENTS = ', fileContents);
   // NOTE: The `setOutput` library method basically writes values as multiline environment variables with
   // dynamically generated delimiters (which happens to be a UUID). So we remove the delimiters and then
   // get to the keys & values alone.
@@ -61,15 +59,12 @@ const getGithubOutputEnvironmentValues = (): Record<string, string> => {
     .split(
       /ghadelimiter_([0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})/i
     )
-    .map((_) => _.replace(/<</g, '').replace(/\n/g, ''))
-    .flatMap((_) => (anyNonNilUUID(_) || _ === '\n' ? [] : _));
-  console.log('>> CLEANED UP CONTENT = ', cleanedUpContent);
+    .map((_) => _.replace(/<</g, '').replace(/(\r?)\n/g, ''))
+    .flatMap((_) => (anyNonNilUUID(_) || _ === EOL || _ === '' ? [] : _));
   const entries = Array.from({ length: cleanedUpContent.length / 2 }, () =>
     cleanedUpContent.slice(0, 2)
   );
-  console.log('>> ENTRIES = ', entries);
   const outputRecords = Object.fromEntries(entries);
-  console.log('>> OUTPUT RECORDS = ', outputRecords);
   return outputRecords;
 };
 
