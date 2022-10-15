@@ -39,7 +39,7 @@ jobs:
     - name: publish code coverage to code-climate
       uses: paambaati/codeclimate-action@v3.1.0
       env:
-        CC_TEST_REPORTER_ID: 3470adaf12ff7cecdfe5a968ae0e95d098b6ee58c340114e1e90d440ee9e66ab
+        CC_TEST_REPORTER_ID: e88e8ad713e3cc035bafc9aa168b956cf6bb04b1e539dd52f1282757d7857eda
       with:
         debug: true
       if: ${{ github.event_name == 'push' }}
