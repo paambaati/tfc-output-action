@@ -12,6 +12,9 @@ jobs:
     - name: install dependencies
       run: npm ci
 
+    - name: check lock file for untrusted packages
+      run: npm_config_yes=true npx lockfile-lint --path package-lock.json --allowed-hosts npm --validate-https
+
     - name: build typescript
       run: npm run build
 
