@@ -1,7 +1,7 @@
 # tfc-output-action
 
-[![Test Coverage](https://api.codeclimate.com/v1/badges/8f2233d4c51c92ad427c/test_coverage)](https://codeclimate.com/github/paambaati/codeclimate-action/test_coverage)
-[![Build Status](https://github.com/paambaati/tfc-get-output-action/workflows/PR%20Checks/badge.svg)](https://actions-badge.atrox.dev/paambaati/tfc-get-output-action/goto)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4eb8c0c93ff2e68baacc/test_coverage)](https://codeclimate.com/github/paambaati/tfc-output-action/test_coverage)
+[![Build Status](https://github.com/paambaati/tfc-output-action/workflows/PR%20checks/badge.svg)](https://actions-badge.atrox.dev/paambaati/tfc-output-action/goto)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A GitHub action that fetches [Terraform Output](https://www.terraform.io/language/values/outputs) values from [Terraform Cloud](https://www.terraform.io/cloud-docs) remote state. Additionally, it [securely handles sensitive output](#sensitive-output).
