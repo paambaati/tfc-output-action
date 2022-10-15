@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/paambaati/tfc-output-action/compare/v1.0.0...v1.0.1) (2022-10-15)
+
+
+### Bug Fixes
+
+* **ci:** install dependencies ([7282c5b](https://github.com/paambaati/tfc-output-action/commit/7282c5b7edee1c0f18271faf23a27ce8b2cc151f))
+
 # 1.0.0 (2022-10-15)
 
 
