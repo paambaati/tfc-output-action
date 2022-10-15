@@ -14,7 +14,16 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v3
 
-      - name: Cut a release on GitHub
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: make a release on GitHub
         run: npm_config_yes=true npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
