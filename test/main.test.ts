@@ -3,8 +3,15 @@ import nock from 'nock';
 import toReadableStream from 'to-readable-stream';
 import { default as hookStd } from 'hook-std';
 import sinon from 'sinon';
-import { readFile, mkdtempSync, openSync, closeSync, unlinkSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import {
+  readFile,
+  mkdtempSync,
+  openSync,
+  readFileSync,
+  closeSync,
+  unlinkSync,
+} from 'node:fs';
+import { tmpdir, EOL } from 'node:os';
 import { join, sep } from 'node:path';
 import { promisify } from 'util';
 import { run } from '../src/main';
@@ -40,6 +47,12 @@ const unmockGithubOutputEnvironment = (): void => {
   process.env.GITHUB_OUTPUT = '';
 };
 
+const getGithubOutputEnvironmentValues = (): Record<string, string> => {
+  const outputFilePath = process.env.GITHUB_OUTPUT as string;
+  const fileContents = readFileSync(outputFilePath).toString();
+  return Object.fromEntries(fileContents.split(EOL).map((_) => _.split('=')));
+};
+
 const isRunningInGithubActions = (): boolean =>
   process.env.GITHUB_ACTIONS === 'true';
 
@@ -51,7 +64,7 @@ test('🛠 setup', (t) => {
 });
 
 test('🧪 run() should retrieve the output variable from Terraform Cloud and make it available as an action output (and mask sensitive variables).', async (t) => {
-  t.plan(1);
+  t.plan(2);
   t.teardown(() => sandbox.restore());
 
   const input = {
@@ -89,23 +102,33 @@ test('🧪 run() should retrieve the output variable from Terraform Cloud and ma
     nock.cleanAll();
   }
 
-  t.equal(
-    capturedOutput,
-    // prettier-ignore
-    `::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...
-::add-mask::value
-
-::set-output name=value::xyz
-::debug::✅ Output variable found!
-`,
+  t.same(
+    capturedOutput.split(EOL).filter(Boolean),
+    [
+      '::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...',
+      '::add-mask::value',
+      isRunningInGithubActions() ? undefined : '::set-output name=value::xyz',
+      '::debug::✅ Output variable found!',
+    ].filter(Boolean),
     'should execute all steps.'
   );
+
+  if (isRunningInGithubActions()) {
+    t.equal(
+      getGithubOutputEnvironmentValues().value,
+      'xyz',
+      'output value should be correctly set'
+    );
+  } else {
+    t.pass();
+  }
+
   nock.cleanAll();
   t.end();
 });
 
 test('🧪 run() should retrieve the output variable from Terraform Cloud and make it available as an action output (and not mask non-sensitive variables).', async (t) => {
-  t.plan(1);
+  t.plan(2);
   t.teardown(() => sandbox.restore());
 
   const input = {
@@ -144,16 +167,28 @@ test('🧪 run() should retrieve the output variable from Terraform Cloud and ma
     nock.cleanAll();
   }
 
-  t.equal(
-    capturedOutput,
-    // prettier-ignore
-    `::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...
-
-::set-output name=value::xyz-non-sensitive
-::debug::✅ Output variable found!
-`,
+  t.same(
+    capturedOutput.split(EOL).filter(Boolean),
+    [
+      '::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...',
+      isRunningInGithubActions()
+        ? undefined
+        : '::set-output name=value::xyz-non-sensitive',
+      '::debug::✅ Output variable found!',
+    ].filter(Boolean),
     'should execute all steps.'
   );
+
+  if (isRunningInGithubActions()) {
+    t.equal(
+      getGithubOutputEnvironmentValues().value,
+      'xyz',
+      'output value should be correctly set'
+    );
+  } else {
+    t.pass();
+  }
+
   nock.cleanAll();
   t.end();
 });
@@ -183,12 +218,12 @@ test('🧪 run() should display an appropriate error if validation of the worksp
     nock.cleanAll();
   }
 
-  t.equal(
-    capturedOutput,
-    // prettier-ignore
-    `::error::Terraform Cloud workspace ID looks invalid; it must start with \'ws-\'
-::error::Terraform Cloud workspace ID looks invalid; it must start with \'ws-\'
-`,
+  t.same(
+    capturedOutput.split(EOL).filter(Boolean),
+    [
+      "::error::Terraform Cloud workspace ID looks invalid; it must start with 'ws-'",
+      "::error::Terraform Cloud workspace ID looks invalid; it must start with 'ws-'",
+    ],
     'should print an appropriate error message.'
   );
   nock.cleanAll();
@@ -237,13 +272,13 @@ test('🧪 run() should display an appropriate error if the getTFCOutput() metho
     nock.cleanAll();
   }
 
-  t.equal(
-    capturedOutput,
-    // prettier-ignore
-    `::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...
-::error::Terraform Cloud API returned an error response with code 401
-::error::🚨 Fetching output variable from Terraform Cloud API failed!
-`,
+  t.same(
+    capturedOutput.split(EOL).filter(Boolean),
+    [
+      '::debug::ℹ️ Fetching state output from Terraform Cloud API for workspace ID ws-123 and variable name abc ...',
+      '::error::Terraform Cloud API returned an error response with code 401',
+      '::error::🚨 Fetching output variable from Terraform Cloud API failed!',
+    ],
     'should print an appropriate error message.'
   );
   nock.cleanAll();
