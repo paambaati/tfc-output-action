@@ -6,6 +6,7 @@
         "ts-node/register/transpile-only"
     ],
     "exclude": [
+        "lib/",
         "**/*.d.ts",
         "coverage/",
         "test/"
