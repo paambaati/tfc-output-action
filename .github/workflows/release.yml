@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cut a release on GitHub
-        run: npm_config_yes=true npx semantic-release
+        run: npm_config_yes=true npx semantic-release --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_AUTHOR_NAME: 'GP'
