@@ -1,6 +1,7 @@
 import test from 'tape';
 import nock from 'nock';
 import toReadableStream from 'to-readable-stream';
+import { anyNonNil as anyNonNilUUID } from 'is-uuid';
 import { default as hookStd } from 'hook-std';
 import sinon from 'sinon';
 import {
@@ -38,24 +39,36 @@ const createTempFile = (fileName: string): string => {
 
 const mockGithubOutputEnvironment = (): void => {
   const tempFilePath = createTempFile('MOCK_GITHUB_OUTPUT');
-  console.log('>> TEMP FILE PATH = ', tempFilePath)
+  console.log('>> TEMP FILE PATH = ', tempFilePath);
   process.env.GITHUB_OUTPUT = tempFilePath;
-  console.log('>> GITHUB_OUTPUT = ', process.env.GITHUB_OUTPUT)
+  console.log('>> GITHUB_OUTPUT = ', process.env.GITHUB_OUTPUT);
 };
 
 const unmockGithubOutputEnvironment = (): void => {
-    const tempFilePath = process.env.GITHUB_OUTPUT as string;
-    console.log('>> TEMP FILE PATH (UNMOCK) = ', tempFilePath)
+  const tempFilePath = process.env.GITHUB_OUTPUT as string;
+  console.log('>> TEMP FILE PATH (UNMOCK) = ', tempFilePath);
   unlinkSync(tempFilePath);
   process.env.GITHUB_OUTPUT = '';
 };
 
 const getGithubOutputEnvironmentValues = (): Record<string, string> => {
   const outputFilePath = process.env.GITHUB_OUTPUT as string;
-  console.log('>> TEMP FILE PATH = ', outputFilePath)
+  console.log('>> TEMP FILE PATH = ', outputFilePath);
   const fileContents = readFileSync(outputFilePath).toString();
   console.log('>> TEMP FILE CONTENTS = ', fileContents);
-  const outputRecords = Object.fromEntries(fileContents.split(EOL).map((_) => _.split('=')));
+  // NOTE: The `setOutput` library method basically writes values as multiline environment variables with
+  // dynamically generated delimiters (which happens to be a UUID). So we remove the delimiters and then
+  // get to the keys & values alone.
+  const cleanedUpContent = fileContents
+    .split(/<<ghadelimiter_(.*)\n/)
+    .map((_) => _.replace(/\nghadelimiter_(.*)(\n?)(\n?)>>(\n?)/, ''))
+    .flatMap((_) => (anyNonNilUUID(_) || _ === '\n' ? [] : _));
+  console.log('>> CLEANED UP CONTENT = ', cleanedUpContent);
+  const entries = Array.from({ length: cleanedUpContent.length / 2 }, () =>
+    cleanedUpContent.slice(0, 2)
+  );
+  console.log('>> ENTRIES = ', entries);
+  const outputRecords = Object.fromEntries(entries);
   console.log('>> OUTPUT RECORDS = ', outputRecords);
   return outputRecords;
 };
