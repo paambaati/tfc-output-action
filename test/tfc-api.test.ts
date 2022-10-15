@@ -2,7 +2,7 @@ import test from 'tape';
 import nock from 'nock';
 import sinon from 'sinon';
 import toReadableStream from 'to-readable-stream';
-import { readFile } from 'fs';
+import { readFile } from 'node:fs';
 import { promisify } from 'util';
 import { getTFCOutput } from '../src/tfc-api';
 

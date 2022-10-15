@@ -3,7 +3,9 @@ import nock from 'nock';
 import toReadableStream from 'to-readable-stream';
 import { default as hookStd } from 'hook-std';
 import sinon from 'sinon';
-import { readFile } from 'fs';
+import { readFile, mkdtempSync, openSync, closeSync, unlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, sep } from 'node:path';
 import { promisify } from 'util';
 import { run } from '../src/main';
 
@@ -18,12 +20,33 @@ import { run } from '../src/main';
  * */
 
 const readFileAsync = promisify(readFile);
-
 const sandbox = sinon.createSandbox();
+
+const createTempFile = (fileName: string): string => {
+  const tmpDir = mkdtempSync(join(tmpdir(), 'test-tfc-output-action-'));
+  const filePath = join(tmpDir, sep, fileName);
+  closeSync(openSync(filePath, 'wx'));
+  return filePath;
+};
+
+const mockGithubOutputEnvironment = (): void => {
+  const tempFilePath = createTempFile('MOCK_GITHUB_OUTPUT');
+  process.env.GITHUB_OUTPUT = tempFilePath;
+};
+
+const unmockGithubOutputEnvironment = (): void => {
+  const tempFilePath = process.env.GITHUB_OUTPUT as string;
+  unlinkSync(tempFilePath);
+  process.env.GITHUB_OUTPUT = '';
+};
+
+const isRunningInGithubActions = (): boolean =>
+  process.env.GITHUB_ACTIONS === 'true';
 
 test('🛠 setup', (t) => {
   nock.disableNetConnect();
   if (!nock.isActive()) nock.activate();
+  if (isRunningInGithubActions()) mockGithubOutputEnvironment();
   t.end();
 });
 
@@ -232,6 +255,7 @@ test('💣 teardown', (t) => {
   nock.cleanAll();
   nock.enableNetConnect();
   sandbox.restore();
+  if (isRunningInGithubActions()) unmockGithubOutputEnvironment();
   if (process.exitCode === 1) process.exitCode = 0; // This is required because @actions/core `setFailed` sets the exit code to 0 when we're testing errors.
   t.end();
 });
