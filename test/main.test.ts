@@ -61,7 +61,7 @@ const getGithubOutputEnvironmentValues = (): Record<string, string> => {
   // get to the keys & values alone.
   const cleanedUpContent = fileContents
     .split(/<<ghadelimiter_(.*)\n/)
-    .map((_) => _.replace(/\nghadelimiter_(.*)(\n?)(\n?)>>(\n?)/, ''))
+    .map((_) => _.replace(/\nghadelimiter_(.*)(\n?)(\n?)/, ''))
     .flatMap((_) => (anyNonNilUUID(_) || _ === '\n' ? [] : _));
   console.log('>> CLEANED UP CONTENT = ', cleanedUpContent);
   const entries = Array.from({ length: cleanedUpContent.length / 2 }, () =>
