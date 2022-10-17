@@ -5,6 +5,7 @@ on:
       - published
       - created
       - released
+      - rerequested
 
 jobs:
   publish:
@@ -19,4 +20,4 @@ jobs:
           COMMIT_EMAIL: 'me@httgp.com'
           CREATE_MAJOR_VERSION_TAG: false
           CREATE_MINOR_VERSION_TAG: false
-          CLEAN_TARGETS: '.[!.]*,test,src,*.ts,*.json,CHANGELOG.md,_config.yml'
+          CLEAN_TARGETS: '.[!.]*,test,src,*.ts,*.json,CHANGELOG.md,_config.yml,.github,coverage,.nyc_output'
