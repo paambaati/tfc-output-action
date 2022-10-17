@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/paambaati/tfc-output-action/compare/v1.0.1...v1.0.2) (2022-10-17)
+
+
+### Bug Fixes
+
+* **ci:** set up the correct release/publish workflows ([5ead73d](https://github.com/paambaati/tfc-output-action/commit/5ead73d76c979299ef8e2d058340f5bdf91f2502))
+
 ## [1.0.1](https://github.com/paambaati/tfc-output-action/compare/v1.0.0...v1.0.1) (2022-10-15)
 
 
