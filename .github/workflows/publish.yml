@@ -25,3 +25,6 @@ jobs:
           CREATE_MAJOR_VERSION_TAG: false
           CREATE_MINOR_VERSION_TAG: false
           CLEAN_TARGETS: '.[!.]*,test,src,*.ts,*.json,CHANGELOG.md,_config.yml,.github,coverage,.nyc_output'
+          BRANCH_NAME: 'releases/${MAJOR}'
+        env:
+          DEBUG: '*'
