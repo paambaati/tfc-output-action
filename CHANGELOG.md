@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/paambaati/tfc-output-action/compare/v1.0.7...v1.0.8) (2022-10-17)
+
+
+### Bug Fixes
+
+* **ci:** use PAT instead of default token to make sure one workflow can trigger another ([887d8a3](https://github.com/paambaati/tfc-output-action/commit/887d8a3159f54d78013b5a8f85877c2db8ef8fe1))
+
 ## [1.0.7](https://github.com/paambaati/tfc-output-action/compare/v1.0.6...v1.0.7) (2022-10-17)
 
 
