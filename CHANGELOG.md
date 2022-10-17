@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/paambaati/tfc-output-action/compare/v1.0.6...v1.0.7) (2022-10-17)
+
+
+### Bug Fixes
+
+* **ci:** add workflow for major version tag ([6536da2](https://github.com/paambaati/tfc-output-action/commit/6536da2da4fc3ad2312bea1da15bf6dc78359765))
+* **ci:** try to debug why the publish workflow won't run ([f6e6fa9](https://github.com/paambaati/tfc-output-action/commit/f6e6fa91c3340bb5e9177a48ad7099741a12fe89))
+
 ## [1.0.6](https://github.com/paambaati/tfc-output-action/compare/v1.0.5...v1.0.6) (2022-10-17)
 
 
