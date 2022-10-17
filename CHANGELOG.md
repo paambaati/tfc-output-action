@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/paambaati/tfc-output-action/compare/v1.0.5...v1.0.6) (2022-10-17)
+
+
+### Bug Fixes
+
+* **ci:** make sure CI steps run for release commit ([77c4931](https://github.com/paambaati/tfc-output-action/commit/77c49313f31544cbe1340f181aed072d1020b835))
+
 ## [1.0.5](https://github.com/paambaati/tfc-output-action/compare/v1.0.4...v1.0.5) (2022-10-17)
 
 
