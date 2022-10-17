@@ -1,12 +1,12 @@
 name: "Publish"
 on:
-  create:
-    branches:
-      - main
+  release:
+    types:
+      - published
 
 jobs:
   publish:
-    name: Publish Action to GitHub marketplace
+    name: Publish released Action to GitHub marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Publish action
