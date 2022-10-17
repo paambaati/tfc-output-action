@@ -2,7 +2,7 @@ name: "PR checks"
 on: [pull_request, push]
 
 jobs:
-  check-pr:
+  check_pr:
     name: "PR checks"
     runs-on: ubuntu-latest
     steps:
