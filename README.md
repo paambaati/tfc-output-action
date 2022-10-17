@@ -34,7 +34,7 @@ Assuming you have a [Terraform Output](https://www.terraform.io/language/values/
 ```yaml
 steps:
   - name: Fetch remote value from Terraform
-    uses: paambaati/tfc-output-action@v1.0.0
+    uses: paambaati/tfc-output-action@v1.0.3
     id: tfc-output
     with:
       apiToken: ${{ secrets.TF_API_TOKEN }}
