@@ -44,7 +44,7 @@ jobs:
 
     - name: publish code coverage to code-climate
       if: ${{ github.event_name == 'push' }}
-      uses: paambaati/codeclimate-action@v3.1.0
+      uses: paambaati/codeclimate-action@v3.2.0
       env:
         CC_TEST_REPORTER_ID: e88e8ad713e3cc035bafc9aa168b956cf6bb04b1e539dd52f1282757d7857eda
       with:
