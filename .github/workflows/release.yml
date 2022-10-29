@@ -26,7 +26,8 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - run: npm_config_yes=true npx semantic-release --dry-run
+      - name: find next release version
+        run: npm_config_yes=true npx semantic-release --dry-run
         id: next-version
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_PERSONAL_TOKEN }}
